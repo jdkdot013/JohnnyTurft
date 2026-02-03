@@ -81,6 +81,7 @@ button {
 
 img {
     -webkit-touch-callout: none; /* iOS Safari */
+    touch-action: manipulation;
 }
 
 .preload-container {
@@ -146,6 +147,7 @@ img {
     padding-top: 8px;
     padding-bottom: calc(var(--add-space) + var(--control-offset) + env(safe-area-inset-bottom));
     width: 100%;
+    touch-action: manipulation;
 }
 
 .tallyGroup {
@@ -153,6 +155,7 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
+    touch-action: manipulation;
 }
 
 .tallyGroupActive {
