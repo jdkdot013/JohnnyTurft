@@ -58,8 +58,12 @@ function updateTallyDisplay() {
     const overlay = document.getElementById('completeOverlay');
     if (groupCounts.every(count => count === MAX_PER_GROUP)) {
         overlay.classList.remove('hidden');
+        overlay.removeAttribute('hidden');
+        overlay.style.display = 'flex';
     } else {
         overlay.classList.add('hidden');
+        overlay.setAttribute('hidden', '');
+        overlay.style.display = 'none';
     }
 
     document.getElementById('moreButton').style.display = totalTallies > 0 ? "block" : "none";
@@ -119,8 +123,9 @@ document.addEventListener('DOMContentLoaded', function() {
         hideMoreOptions();
     });
 
-    document.getElementById('overlayCloseButton').addEventListener('click', function() {
-        document.getElementById('completeOverlay').classList.add('hidden');
+    document.getElementById('overlayCloseButton').addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
         resetTally();
     });
 
