@@ -184,6 +184,10 @@ img {
     z-index: 10;
 }
 
+.overlay.hidden {
+    display: none;
+}
+
 .overlay-header {
     align-self: flex-start;
     width: 100%;
