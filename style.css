@@ -123,6 +123,9 @@ img {
     justify-content: space-around;
     max-width: 1130px;
     margin: auto;
+    flex: 1 1 auto;
+    min-height: 0;
+    padding-bottom: calc(96px + env(safe-area-inset-bottom));
 }
 
 .tallyGroup {
@@ -140,8 +143,18 @@ img {
     height: auto;
 }
 
-.addTally img {
-    align-self: flex-end;
+#addTally {
+    position: fixed;
+    left: 50%;
+    bottom: calc(12px + env(safe-area-inset-bottom));
+    transform: translateX(-50%);
+    width: clamp(80px, 16vw, 128px);
+    height: auto;
+    z-index: 20;
+}
+
+#addTally img {
+    display: block;
     width: 100%;
     height: auto;
 }
