@@ -1,5 +1,5 @@
 :root {
-    --add-size: clamp(110px, 20vw, 170px);
+    --add-space: clamp(110px, 18vh, 200px);
     --add-gap: 16px;
 }
 
@@ -131,7 +131,7 @@ img {
     margin: auto;
     flex: 1 1 auto;
     min-height: 0;
-    padding-bottom: calc(var(--add-size) + var(--add-gap) + env(safe-area-inset-bottom));
+    padding-bottom: calc(var(--add-space) + var(--add-gap) + env(safe-area-inset-bottom));
 }
 
 .tallyGroup {
@@ -152,10 +152,14 @@ img {
 
 #addTally {
     position: fixed;
-    left: 50%;
+    left: 0;
+    right: 0;
     bottom: calc(var(--add-gap) + env(safe-area-inset-bottom));
-    transform: translateX(-50%);
-    width: var(--add-size);
+    width: 100%;
+    transform: none;
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    box-sizing: border-box;
     height: auto;
     z-index: 20;
 }
