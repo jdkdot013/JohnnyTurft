@@ -1,6 +1,6 @@
 :root {
     --add-space: clamp(110px, 18vh, 200px);
-    --add-gap: 16px;
+    --control-offset: 20px;
 }
 
 body, html, .overlay {
@@ -82,7 +82,7 @@ img {
 .more-button {
   position: fixed;
   left: calc(20px + env(safe-area-inset-left));
-  bottom: calc(20px + env(safe-area-inset-bottom));
+  bottom: calc(var(--control-offset) + env(safe-area-inset-bottom));
   background-color: transparent;
   border: none;
   cursor: pointer;
@@ -128,10 +128,9 @@ img {
     justify-content: space-around;
     align-content: flex-start;
     max-width: 1130px;
-    margin: auto;
-    flex: 1 1 auto;
-    min-height: 0;
-    padding-bottom: calc(var(--add-space) + var(--add-gap) + env(safe-area-inset-bottom));
+    margin: 0 auto;
+    padding-top: 8px;
+    padding-bottom: calc(var(--add-space) + var(--control-offset) + env(safe-area-inset-bottom));
 }
 
 .tallyGroup {
@@ -154,7 +153,7 @@ img {
     position: fixed;
     left: 0;
     right: 0;
-    bottom: calc(var(--add-gap) + env(safe-area-inset-bottom));
+    bottom: calc(var(--control-offset) + env(safe-area-inset-bottom));
     width: 100%;
     transform: none;
     padding-left: env(safe-area-inset-left);
