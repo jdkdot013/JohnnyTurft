@@ -1,4 +1,4 @@
-const cacheName = 'site-static-v1';
+const cacheName = 'site-static-v2';
 const assets = [
     'index.html',
     'style.css',
@@ -32,6 +32,16 @@ self.addEventListener('fetch', evt => {
     evt.respondWith(
         caches.match(evt.request).then(cacheRes => {
             return cacheRes || fetch(evt.request);
+        })
+    );
+});
+
+self.addEventListener('activate', evt => {
+    evt.waitUntil(
+        caches.keys().then(keys => {
+            return Promise.all(
+                keys.filter(key => key !== cacheName).map(key => caches.delete(key))
+            );
         })
     );
 });

@@ -1,15 +1,51 @@
-let groupCounts = [0, 0, 0, 0, 0, 0];
+const STORAGE_KEY = 'johnnyturft:tallyCounts:v1';
+const GROUP_COUNT = 6;
+const MAX_PER_GROUP = 5;
+
+let groupCounts = new Array(GROUP_COUNT).fill(0);
+
+function loadState() {
+    try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        const parsed = JSON.parse(raw);
+        if (!Array.isArray(parsed) || parsed.length !== GROUP_COUNT) return;
+        const normalized = parsed.map(n => {
+            const value = Number(n);
+            if (!Number.isFinite(value)) return 0;
+            return Math.min(Math.max(value, 0), MAX_PER_GROUP);
+        });
+        groupCounts = normalized;
+    } catch (_) {
+        // Ignore storage errors; fall back to defaults.
+    }
+}
+
+function saveState() {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(groupCounts));
+    } catch (_) {
+        // Ignore storage errors.
+    }
+}
 
 function updateTallyDisplay() {
     const tallyGroups = document.getElementById('tallyGroups');
     tallyGroups.innerHTML = '';
 
     let totalTallies = 0;
+    const activeIndex = groupCounts.findIndex(count => count < MAX_PER_GROUP);
 
     groupCounts.forEach((count, index) => {
         totalTallies += count;
         const groupDiv = document.createElement('div');
         groupDiv.classList.add('tallyGroup');
+        if (index === activeIndex) {
+            groupDiv.classList.add('tallyGroupActive');
+            groupDiv.setAttribute('role', 'button');
+            groupDiv.setAttribute('aria-label', 'Add tally');
+            groupDiv.addEventListener('click', addTally);
+        }
         
         const img = document.createElement('img');
         img.classList.add('tally');
@@ -19,17 +55,19 @@ function updateTallyDisplay() {
         tallyGroups.appendChild(groupDiv);
     });
 
-    if (groupCounts.every(count => count === 5)) {
-        document.getElementById('completeOverlay').style.display = "flex";
+    const overlay = document.getElementById('completeOverlay');
+    if (groupCounts.every(count => count === MAX_PER_GROUP)) {
+        overlay.classList.remove('hidden');
     } else {
-        document.getElementById('completeOverlay').style.display = "none";
+        overlay.classList.add('hidden');
     }
 
     document.getElementById('moreButton').style.display = totalTallies > 0 ? "block" : "none";
+    saveState();
 }
 
 function addTally() {
-    const index = groupCounts.findIndex(count => count < 5);
+    const index = groupCounts.findIndex(count => count < MAX_PER_GROUP);
     if (index !== -1) {
         groupCounts[index]++;
         updateTallyDisplay();
@@ -40,7 +78,6 @@ function addTally() {
 function resetTally() {
     groupCounts.fill(0);
     updateTallyDisplay();
-    document.getElementById('completeOverlay').style.display = 'none';
 }
 
 function subtractTally() {
@@ -58,6 +95,7 @@ function hideMoreOptions() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    loadState();
     updateTallyDisplay();
 
     document.getElementById('addTally').addEventListener('click', addTally);
@@ -86,8 +124,9 @@ document.addEventListener('DOMContentLoaded', function() {
         resetTally();
     });
 
-    document.getElementById('completeOverlay').classList.remove('hidden');
-    document.getElementById('completeOverlay').classList.add('hidden')
+    if (navigator.storage && navigator.storage.persist) {
+        navigator.storage.persist().catch(() => {});
+    }
 });
 
 document.addEventListener('contextmenu', function(e) {
@@ -95,3 +134,10 @@ document.addEventListener('contextmenu', function(e) {
         e.preventDefault();
     }
 }, false);
+
+window.addEventListener('pagehide', saveState);
+document.addEventListener('visibilitychange', function() {
+    if (document.visibilityState === 'hidden') {
+        saveState();
+    }
+});
