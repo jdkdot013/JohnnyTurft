@@ -21,6 +21,12 @@ body, html, .overlay {
     background-color: #000;
 }
 
+html, body {
+    overscroll-behavior: none;
+    touch-action: manipulation;
+    -webkit-text-size-adjust: 100%;
+}
+
 body {
     margin: 0;
     height: 100%;
@@ -52,6 +58,7 @@ button, button img {
     background-color: transparent;
     padding: 0px;
     cursor: pointer;
+    touch-action: manipulation;
 }
 
 button, a, .touch-element {
@@ -150,6 +157,7 @@ img {
 
 .tallyGroupActive {
     cursor: pointer;
+    touch-action: manipulation;
 }
 
 .tally {

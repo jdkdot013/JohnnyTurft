@@ -68,7 +68,6 @@ function updateTallyDisplay() {
 
     document.getElementById('moreButton').style.display = totalTallies > 0 ? "block" : "none";
     saveState();
-    window.scrollTo(0, 0);
 }
 
 function addTally() {
