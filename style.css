@@ -17,7 +17,7 @@ body, html, .overlay {
     align-items: center;
     font-family: Helvetica, sans-serif;
     font-weight: bold;
-    overflow-y: hidden;
+    overflow: hidden;
     background-color: #000;
 }
 
@@ -25,6 +25,7 @@ html, body {
     overscroll-behavior: none;
     touch-action: manipulation;
     -webkit-text-size-adjust: 100%;
+    box-sizing: border-box;
 }
 
 body {
@@ -65,11 +66,12 @@ button, a, .touch-element {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-* {
+*, *::before, *::after {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  box-sizing: border-box;
 }
 
 button {
