@@ -1,15 +1,14 @@
 :root {
     --add-space: clamp(110px, 18vh, 200px);
     --control-offset: 20px;
+    --app-height: 100vh;
 }
 
 body, html, .overlay {
     background-color: #000;
     width: 100%;
-    height: 100vh;
-    height: 100dvh;
-    min-height: 100vh;
-    min-height: 100dvh;
+    height: var(--app-height);
+    min-height: var(--app-height);
     margin: 0;
     padding: 0;
     display: flex;
@@ -30,7 +29,7 @@ html, body {
 
 body {
     margin: 0;
-    height: 100dvh;
+    height: var(--app-height);
     justify-content: flex-start;
     position: relative;
     z-index: 0;

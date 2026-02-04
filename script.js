@@ -4,6 +4,13 @@ const MAX_PER_GROUP = 5;
 
 let groupCounts = new Array(GROUP_COUNT).fill(0);
 
+function setAppHeight() {
+    document.documentElement.style.setProperty('--app-height', `${window.innerHeight}px`);
+}
+
+setAppHeight();
+window.addEventListener('resize', setAppHeight);
+
 function loadState() {
     try {
         const raw = localStorage.getItem(STORAGE_KEY);
