@@ -4,12 +4,22 @@ const MAX_PER_GROUP = 5;
 
 let groupCounts = new Array(GROUP_COUNT).fill(0);
 
-function setAppHeight() {
-    document.documentElement.style.setProperty('--app-height', `${window.innerHeight}px`);
-}
+function enableIOSScrollLock() {
+    const isIOS =
+        /iP(ad|hone|od)/.test(navigator.platform) ||
+        (navigator.userAgent.includes('Mac') && 'ontouchend' in document);
 
-setAppHeight();
-window.addEventListener('resize', setAppHeight);
+    if (!isIOS) return;
+
+    document.addEventListener(
+        'touchmove',
+        (e) => {
+            if (e.touches && e.touches.length > 1) return; // Don't block pinch.
+            e.preventDefault();
+        },
+        { passive: false }
+    );
+}
 
 function loadState() {
     try {
@@ -106,6 +116,7 @@ function hideMoreOptions() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    enableIOSScrollLock();
     loadState();
     updateTallyDisplay();
 
