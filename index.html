@@ -19,48 +19,45 @@
     <link rel="preload" href="/JohnnyTurft/images/tally-5.png" as="image">
 </head>
 <body>
-    <div id="app">
-        <header>
-            <img src="images/header-image.png" alt="Header Image" style="width: 100%;">
-        </header>
-        <div id="tallyGroups"></div>
+    <header>
+        <img src="images/header-image.png" alt="Header Image" style="width: 100%;">
+    </header>
+    <div id="tallyGroups"></div>
+    <button id="addTally"><img src="icons/add-icon.png" alt="Voeg toe"></button>
 
-        <button id="addTally"><img src="icons/add-icon.png" alt="Voeg toe"></button>
+    <button id="moreButton" class="more-button">
+      <img src="icons/more-icon.png" alt="Meer opties">
+    </button>
 
-        <button id="moreButton" class="more-button">
-          <img src="icons/more-icon.png" alt="Meer opties">
-        </button>
-
-        <div id="moreOptions" class="more-options hidden">
-          <button id="removeTally">MIN 1</button>
-          <button id="resetTally">RESET</button>
-        </div>
-
-        <div id="completeOverlay" class="overlay hidden" hidden style="display: none;">
-          <img src="images/header-image-white.png" alt="Header" class="overlay-header">
-          <button id="overlayCloseButton" class="overlay-close-button">
-            <img src="icons/close-icon.png" alt="Close">
-          </button>
-          <img src="images/txt.png" alt="Centered" class="overlay-centered">
-        </div>
-
-        <div class="preload-container">
-          <img src="images/tally-1.png" alt="Preload Tally 1">
-          <img src="images/tally-2.png" alt="Preload Tally 2">
-          <img src="images/tally-3.png" alt="Preload Tally 3">
-          <img src="images/tally-4.png" alt="Preload Tally 4">
-          <img src="images/tally-5.png" alt="Preload Tally 5">
-        </div>
+    <div id="moreOptions" class="more-options hidden">
+      <button id="removeTally">MIN 1</button>
+      <button id="resetTally">RESET</button>
     </div>
 
+    <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
+
+    <div id="completeOverlay" class="overlay hidden" hidden style="display: none;">
+      <img src="images/header-image-white.png" alt="Header" class="overlay-header">
+      <button id="overlayCloseButton" class="overlay-close-button">
+        <img src="icons/close-icon.png" alt="Close">
+      </button>
+      <img src="images/txt.png" alt="Centered" class="overlay-centered">
+    </div>
+
+    <div class="preload-container">
+      <img src="images/tally-1.png" alt="Preload Tally 1">
+      <img src="images/tally-2.png" alt="Preload Tally 2">
+      <img src="images/tally-3.png" alt="Preload Tally 3">
+      <img src="images/tally-4.png" alt="Preload Tally 4">
+      <img src="images/tally-5.png" alt="Preload Tally 5">
+    </div>
 
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(registration => {
+          navigator.serviceWorker.register('sw.js').then(registration => {
             console.log('Service Worker registered! Scope:', registration.scope);
-            registration.update().catch(() => {});
           }).catch(err => {
             console.log('Service Worker registration failed:', err);
           });

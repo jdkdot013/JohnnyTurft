@@ -4,23 +4,6 @@ const MAX_PER_GROUP = 5;
 
 let groupCounts = new Array(GROUP_COUNT).fill(0);
 
-function enableIOSScrollLock() {
-    const isIOS =
-        /iP(ad|hone|od)/.test(navigator.platform) ||
-        (navigator.userAgent.includes('Mac') && 'ontouchend' in document);
-
-    if (!isIOS) return;
-
-    document.addEventListener(
-        'touchmove',
-        (e) => {
-            if (e.touches && e.touches.length > 1) return; // Don't block pinch.
-            e.preventDefault();
-        },
-        { passive: false }
-    );
-}
-
 function loadState() {
     try {
         const raw = localStorage.getItem(STORAGE_KEY);
@@ -116,7 +99,6 @@ function hideMoreOptions() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    enableIOSScrollLock();
     loadState();
     updateTallyDisplay();
 
