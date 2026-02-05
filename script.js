@@ -11,6 +11,14 @@ function enableIOSScrollLock() {
 
     if (!isIOS) return;
 
+    // Workaround for iOS Safari/standalone viewport bugs where fixed layers
+    // can end up leaving an unpainted strip near the bottom safe area.
+    // Pin the document to the visual viewport without relying on vh units.
+    document.body.style.position = 'fixed';
+    document.body.style.inset = '0';
+    document.body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
+
     document.addEventListener(
         'touchmove',
         (e) => {

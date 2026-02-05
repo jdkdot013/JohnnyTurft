@@ -1,4 +1,4 @@
-const cacheName = 'site-static-v6';
+const cacheName = 'site-static-v8';
 const assets = [
     'index.html',
     'style.css',
